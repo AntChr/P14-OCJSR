@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addEmployee } from '../features/employeeSlice';
+import DatePicker from '../components/DatePicker'; 
 import '../style/Home.css';
 import { states } from '../data/states';
 
@@ -6,14 +9,16 @@ const Home = () => {
   const [employee, setEmployee] = useState({
     firstName: '',
     lastName: '',
-    dateOfBirth: '',
-    startDate: '',
+    dateOfBirth: new Date(),
+    startDate: new Date(),
     street: '',
     city: '',
     state: '',
     zipCode: '',
     department: ''
   });
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -22,12 +27,15 @@ const Home = () => {
       [id]: value
     }));
   };
-
+  const handleDateChange = (date, field) => {
+    setEmployee(prevState => ({
+      ...prevState,
+      [field]: date
+    }));
+  };
   const saveEmployee = () => {
-    const employees = JSON.parse(localStorage.getItem('employees')) || [];
-    employees.push(employee);
-    localStorage.setItem('employees', JSON.stringify(employees));
-    alert('Employee Created!'); 
+    dispatch(addEmployee(employee));
+    alert('Employee Created!');
   };
 
   return (
@@ -44,11 +52,17 @@ const Home = () => {
         <label htmlFor="last-name">Last Name</label>
         <input type="text" id="lastName" value={employee.lastName} onChange={handleChange} />
 
-        <label htmlFor="date-of-birth">Date of Birth</label>
-        <input type="date" id="date-of-birth" value={employee.dateOfBirth} onChange={handleChange} />
+        <DatePicker
+          label="Date of Birth"
+          selectedDate={employee.dateOfBirth}
+          onDateChange={(date) => handleDateChange(date, 'dateOfBirth')}
+        />
 
-        <label htmlFor="start-date">Start Date</label>
-        <input type="date" id="start-date" value={employee.startDate} onChange={handleChange} />
+        <DatePicker
+          label="Start Date"
+          selectedDate={employee.startDate}
+          onDateChange={(date) => handleDateChange(date, 'startDate')}
+        />
 
         <fieldset className="address">
           <legend>Address</legend>

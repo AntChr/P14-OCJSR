@@ -1,14 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
 import '../style/Home.css';
 
 const EmployeeList = () => {
-  const [employees, setEmployees] = useState([]);
+  const employees = useSelector(state => state.employee.employees);
+  const [search, setSearch] = useState('');
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
+
 
   useEffect(() => {
-    const storedEmployees = JSON.parse(localStorage.getItem('employees')) || [];
-    setEmployees(storedEmployees);
-  }, []);
+    const filteredData = employees.filter(employee => 
+      employee.firstName.toLowerCase().includes(search.toLowerCase()) ||
+      employee.lastName.toLowerCase().includes(search.toLowerCase()) ||
+      employee.department.toLowerCase().includes(search.toLowerCase()) ||
+      employee.state.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredEmployees(filteredData);
+  }, [search, employees]);
 
   const columns = [
     {
@@ -61,9 +70,16 @@ const EmployeeList = () => {
   return (
     <div className="container">
       <h1>Current Employees</h1>
+      <input
+        type="text"
+        placeholder="Recherche"
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        className="search-bar"
+      />
       <DataTable
         columns={columns}
-        data={employees}
+        data={filteredEmployees}
         pagination 
       />
       <a href="/">Home</a>
