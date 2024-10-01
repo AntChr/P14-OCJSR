@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addEmployee } from '../features/employeeSlice';
-import DatePicker from '../components/DatePicker'; 
+import DatePicker from '../components/DatePicker';
+import Modal from '../components/Modal'; 
 import '../style/Home.css';
 import { states } from '../data/states';
 
@@ -17,7 +18,7 @@ const Home = () => {
     zipCode: '',
     department: ''
   });
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -35,7 +36,11 @@ const Home = () => {
   };
   const saveEmployee = () => {
     dispatch(addEmployee(employee));
-    alert('Employee Created!');
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -95,6 +100,7 @@ const Home = () => {
         </select>
       </form>
       <button onClick={saveEmployee}>Save</button>
+      {isModalOpen && <Modal message="Employee Created!" onClose={closeModal} />}
     </div>
   );
 };

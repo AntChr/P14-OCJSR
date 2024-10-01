@@ -11,6 +11,22 @@
   align-items: center;
   justify-content: center;
 }
+.container-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.container-search-bar {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.search-bar {
+  width: 20%;
+  height: 40px;
+  padding: 0.1rem;
+}
 
 label {
   display: block;

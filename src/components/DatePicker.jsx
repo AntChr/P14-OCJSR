@@ -38,6 +38,8 @@ const DatePicker = ({ label, selectedDate, onDateChange }) => {
             <Calendar
               currentDate={currentDate}
               onDateClick={handleDateClick}
+              onClose={() => setIsOpen(false)}
+              headerBackgroundColor="#0f659e"
             />
           </div>
         )}

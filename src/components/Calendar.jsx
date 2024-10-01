@@ -4,7 +4,7 @@ import '../style/Calendar.css';
 
 const daysOfWeek = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 
-const Calendar = ({ currentDate, onDateClick }) => {
+const Calendar = ({ currentDate, onDateClick, onClose, headerBackgroundColor }) => {
   const [displayDate, setDisplayDate] = useState(currentDate);
 
   const startOfMonth = new Date(displayDate.getFullYear(), displayDate.getMonth(), 1);
@@ -12,8 +12,18 @@ const Calendar = ({ currentDate, onDateClick }) => {
   const startDay = startOfMonth.getDay();
   const daysInMonth = endOfMonth.getDate();
 
-  const changeMonth = (offset) => {
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: currentYear - 1960 + 1 }, (_, index) => currentYear - index);
+
+  const changeMonth = (offset, e) => {
+    e.preventDefault();
     const newDate = new Date(displayDate.setMonth(displayDate.getMonth() + offset));
+    setDisplayDate(newDate);
+  };
+
+  const handleYearChange = (e) => {
+    const selectedYear = parseInt(e.target.value, 10);
+    const newDate = new Date(displayDate.setFullYear(selectedYear));
     setDisplayDate(newDate);
   };
 
@@ -28,10 +38,18 @@ const Calendar = ({ currentDate, onDateClick }) => {
 
   return (
     <div className="calendar">
-      <div className="calendar-header">
-        <button onClick={() => changeMonth(-1)}>&lt;</button>
-        <span>{displayDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
-        <button onClick={() => changeMonth(1)}>&gt;</button>
+      <div className="calendar-header" style={{ backgroundColor: headerBackgroundColor }}>
+        <button className="calendar-header-months" onClick={(e) => changeMonth(-1, e)}>&lt;</button>
+        <span style={{ color: 'white'}}>{displayDate.toLocaleDateString('fr-FR', { month: 'long' }).charAt(0).toUpperCase() + displayDate.toLocaleDateString('fr-FR', { month: 'long' }).slice(1)}</span>
+        <select value={displayDate.getFullYear()} onChange={handleYearChange}>
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+        <button className="calendar-header-months" onClick={(e) => changeMonth(1, e)}>&gt;</button>
+        <button type="button" onClick={onClose} className="close-button">✖</button>
       </div>
       <div className="calendar-grid">
         {daysOfWeek.map((day) => (
@@ -43,6 +61,7 @@ const Calendar = ({ currentDate, onDateClick }) => {
           <div
             key={index}
             className={`calendar-day ${day.getMonth() === displayDate.getMonth() ? '' : 'disabled'}`}
+            style={{ '--hover-background-color': headerBackgroundColor }}
             onClick={() => onDateClick(day)}
           >
             {day.getDate()}
@@ -56,6 +75,12 @@ const Calendar = ({ currentDate, onDateClick }) => {
 Calendar.propTypes = {
   currentDate: PropTypes.instanceOf(Date).isRequired,
   onDateClick: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired, 
+  headerBackgroundColor: PropTypes.string,
+};
+
+Calendar.defaultProps = {
+  headerBackgroundColor: '#f0f0f0',
 };
 
 export default Calendar;

@@ -69,14 +69,18 @@ const EmployeeList = () => {
 
   return (
     <div className="container">
-      <h1>Current Employees</h1>
+      <div className="container-header">
+        <h1>Current Employees</h1>
+      </div>
+      <div className='container-search-bar'>
       <input
-        type="text"
-        placeholder="Recherche"
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        className="search-bar"
-      />
+          type="text"
+          placeholder="Recherche"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="search-bar"
+        />
+      </div>
       <DataTable
         columns={columns}
         data={filteredEmployees}
