@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addEmployee } from '../features/employeeSlice';
-import DatePicker from '../components/DatePicker';
 import Modal from '../components/Modal'; 
 import '../style/Home.css';
 import { states } from '../data/states';
+import {DatePicker} from 'datepicker-lib-ac'
 
 const Home = () => {
   const [employee, setEmployee] = useState({
@@ -67,8 +67,8 @@ const Home = () => {
           label="Start Date"
           selectedDate={employee.startDate}
           onDateChange={(date) => handleDateChange(date, 'startDate')}
+          headerBackgroundColor="#0f659e"
         />
-
         <fieldset className="address">
           <legend>Address</legend>
           <label htmlFor="street">Street</label>
