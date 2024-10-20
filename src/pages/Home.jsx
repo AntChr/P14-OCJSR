@@ -99,7 +99,7 @@ const Home = () => {
           <option value="Legal">Legal</option>
         </select>
       </form>
-      <button onClick={saveEmployee}>Save</button>
+      <button className='save-button' onClick={saveEmployee}>Save</button>
       {isModalOpen && <Modal message="Employee Created!" onClose={closeModal} />}
     </div>
   );

@@ -10,17 +10,35 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 30%;
+  margin-top: 2%;
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}
+.container-table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 95%;
+  margin-top: 2%;
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
 }
 .container-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
 .container-search-bar {
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  padding-right: 35px;
 }
 .search-bar {
   width: 20%;
@@ -36,4 +54,12 @@ label {
 
 .address {
   margin-top: 10px;
+}
+
+.save-button {
+  margin-bottom: 10px;
+}
+
+.sc-eUlrpB {
+width: 95% !important;
 }
