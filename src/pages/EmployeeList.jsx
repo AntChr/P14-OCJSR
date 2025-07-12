@@ -15,7 +15,7 @@ const EmployeeList = () => {
       employee.lastName.toLowerCase().includes(search.toLowerCase()) ||
       employee.department.toLowerCase().includes(search.toLowerCase()) ||
       employee.state.toLowerCase().includes(search.toLowerCase())
-    );
+    );    
     setFilteredEmployees(filteredData);
   }, [search, employees]);
 
@@ -32,7 +32,7 @@ const EmployeeList = () => {
     },
     {
       name: 'Start Date',
-      selector: row => row.startDate,
+      selector: row => new Date(row.startDate).toLocaleDateString(),
       sortable: true,
     },
     {
@@ -42,7 +42,7 @@ const EmployeeList = () => {
     },
     {
       name: 'Date of Birth',
-      selector: row => row.dateOfBirth,
+      selector: row => new Date(row.dateOfBirth).toLocaleDateString(),
       sortable: true,
     },
     {

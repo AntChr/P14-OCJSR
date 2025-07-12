@@ -14,7 +14,7 @@ const Home = () => {
     startDate: new Date(),
     street: '',
     city: '',
-    state: '',
+    state: states[0].abbreviation,
     zipCode: '',
     department: ''
   });
@@ -24,9 +24,9 @@ const Home = () => {
   const handleChange = (e) => {
     const { id, value } = e.target;
     setEmployee(prevState => ({
-      ...prevState,
-      [id]: value
-    }));
+    ...prevState,
+    [id]: value
+  }));
   };
   const handleDateChange = (date, field) => {
     setEmployee(prevState => ({
@@ -34,10 +34,14 @@ const Home = () => {
       [field]: date
     }));
   };
-  const saveEmployee = () => {
-    dispatch(addEmployee(employee));
-    setIsModalOpen(true);
-  };
+const saveEmployee = () => {
+  dispatch(addEmployee({
+    ...employee,
+    dateOfBirth: employee.dateOfBirth.toISOString(),
+    startDate: employee.startDate.toISOString(),
+  }));
+  setIsModalOpen(true);
+};
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -87,11 +91,12 @@ const Home = () => {
           </select>
 
           <label htmlFor="zip-code">Zip Code</label>
-          <input type="number" id="zip-code" value={employee.zipCode} onChange={handleChange} />
+          <input type="number" id="zipCode" value={employee.zipCode} onChange={handleChange} />
         </fieldset>
 
         <label htmlFor="department">Department</label>
         <select id="department" value={employee.department} onChange={handleChange}>
+          <option value="">-- Please choose a department --</option>
           <option value="Sales">Sales</option>
           <option value="Marketing">Marketing</option>
           <option value="Engineering">Engineering</option>
